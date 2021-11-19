@@ -1,0 +1,3 @@
+/home/kerwin/CLionProjects/NP/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/kerwin/CLionProjects/NP/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/kerwin/CLionProjects/NP/cmake-build-debug/CMakeFiles/NP.dir
