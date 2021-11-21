@@ -57,7 +57,7 @@ void process(int client_socket){
         if (ptr != NULL) {
             len = strlen("filename");
             ptr += len + 2;
-            while (*ptr != "\"") {
+            while (*ptr != '\"') {
                 filename[count++] = *ptr;
                 ptr++;
             }
@@ -65,7 +65,8 @@ void process(int client_socket){
             filename[count] = '\0';
             while (!(*(ptr - 4) == '\r' && *(ptr - 3) == '\n' && *(ptr - 2) == '\r' && *(ptr - 1) == '\n')) ptr++;
             printf("receive filename:%s\n", filename);
-            if ((fptr == fopen(filename, "w")) == NULL) {
+            fptr == fopen(filename, "w");
+            if (fptr == NULL) {
                 printf("error:file");
                 exit(1);
             }
