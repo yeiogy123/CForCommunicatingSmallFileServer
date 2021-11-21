@@ -52,6 +52,7 @@ void process(int client_socket){
         img_fd  = open("spongebob.jpeg", O_RDONLY);
         sendfile(client_socket, img_fd, NULL, 5000000);
         close(img_fd);
+        printf("GET / of buf is [%s]\n",buf);
     }else if(strncmp(buf, "POST /", 6)==0) {
         ptr = strstr(buf, "filename");
         if (ptr != NULL) {
@@ -65,8 +66,8 @@ void process(int client_socket){
             filename[count] = '\0';
             while (!(*(ptr - 4) == '\r' && *(ptr - 3) == '\n' && *(ptr - 2) == '\r' && *(ptr - 1) == '\n')) ptr++;
             printf("receive filename:%s\n", filename);
-            fptr == fopen(filename, "w");
-            if (fptr == NULL) {
+            fptr = fopen(filename, "w");
+            if (fptr==NULL) {
                 printf("error:file");
                 exit(1);
             }
@@ -82,6 +83,7 @@ void process(int client_socket){
             write(client_socket, web_page, sizeof(web_page));
         } else
             write(client_socket, web_page, sizeof(web_page));
+        printf("POST / of buf is [%s]\n",buf);
     }
     write(client_socket, web_page, sizeof(web_page));
 }
@@ -89,15 +91,13 @@ int main(){
     int server_socket, client_socket, listening;
     struct sockaddr_in server_address;
     /**
-     * create a socket
+     * create a socket with IPv4, double-sided, and default protocol
      */
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
     /**
      * initialize the structure for server
-     * bit zero such like(memset)
-     * use ipv4
-     * port
-     * set anyone can get in
+     * bit zero which is like memset
+     * use ipv4, port with 8080, and set anyone can get in
      */
     bzero(&server_address, sizeof(server_address));
     server_address.sin_family = AF_INET;
